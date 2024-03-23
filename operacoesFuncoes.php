@@ -1,6 +1,5 @@
 <?php
 // Tipos de dados
-$nome = "João"; // string
 $curso = "PHP"; // string
 $idade = 20; // int
 $altura = 1.85; // float
@@ -27,7 +26,9 @@ $divisao = $numero1 / $numero2; // divisão
 $resto = $numero1 % $numero2; // resto
 
 // funcao
-function exibitNome($nome)
+function exibirNome($nome)
 {
   echo "Olá, $nome!";
 }
+
+exibirNome("João");
