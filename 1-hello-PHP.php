@@ -24,3 +24,4 @@ define("TAXA", 0.5);
 
 // Escrever o valor de constantes
 echo "TAXA " . TAXA . "%<br>";
+
