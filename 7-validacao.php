@@ -1,13 +1,36 @@
 <?php
-if (isset($_POST["btn_cadastrar"])) {
-  $_nome = $_POST["nome"];
-  $_email = $_POST["email"];
-  $_senha = $_POST["senha"];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $nome = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
+  $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+  $senha = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+
+  // Array de erros
+  $erros = [];
+
+  // Validação dos dados
+  if (empty($nome)) {
+    $erros[] = "Nome é obrigatório.";
+  }
+
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $erros[] = "Email inválido.";
+  }
+
+  if (empty($senha)) {
+    $erros[] = "Senha é obrigatória.";
+  }
+
+  if (empty($erros)) {
+    // Aqui você pode adicionar código para inserir os dados no banco de dados
+    echo "<p>Nome: $nome </p>";
+    echo "<p>Email: $email </p>";
+    echo "<p>Senha: $senha </p>";
+  } else {
+    foreach ($erros as $erro) {
+      echo "<p style='color: red;'>$erro</p>";
+    }
+  }
 }
-
-$_erros = [];
-
-
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +86,7 @@ $_erros = [];
 </head>
 
 <body>
-  <form action="/submit" method="post">
+  <form action="/submit" method="POST">
     <h2>Cadastro de Usuário</h2>
     <label for="username">Nome de usuário:</label>
     <input type="text" id="username" name="username" class="nome" required>
@@ -74,7 +97,7 @@ $_erros = [];
     <label for="password">Senha:</label>
     <input type="password" id="password" name="password" class="senha" required>
 
-    <input type="submit" value="Cadastrar" class="btn_cadastrar">
+    <input type="submit" value="Cadastrar" name="btn_cadastrar" class="btn_cadastrar">
   </form>
 </body>
 
